@@ -42,7 +42,7 @@ public class BootstrapData implements CommandLineRunner {
         Author miekSaved = authorRepository.save(miek);
         Book hyggeSaved = bookRepository.save(hygge);
 
-        // Create author & book
+        // Create another author & book
         Author west = new Author();
         west.setFirstName("Tracey");
         west.setLastName("West");
@@ -63,18 +63,24 @@ public class BootstrapData implements CommandLineRunner {
         miekSaved.getBooks().add(hyggeSaved);
         westSaved.getBooks().add(dmSaved);
 
-        bookRepository.save(hyggeSaved);
-        bookRepository.save(dmSaved);
-
-
-        System.out.println("Author Count: " + authorRepository.count());
-        System.out.println("Book Count: " + bookRepository.count());
-
+        // create a new publisher object
         Publisher happy = new Publisher();
         happy.setPublisherName("Happy Publisher");
         happy.setZipCode("12345");
-        publisherRepository.save(happy);
+        Publisher happySaved = publisherRepository.save(happy);
 
+        // assign this publisher to both books for simplicity
+        hyggeSaved.setPublisher(happySaved);
+        dmSaved.setPublisher(happySaved);
+
+        // Persist everything to the DBs
+        authorRepository.save(miekSaved);
+        authorRepository.save(westSaved);
+        bookRepository.save(hyggeSaved);
+        bookRepository.save(dmSaved);
+
+        System.out.println("Author Count: " + authorRepository.count());
+        System.out.println("Book Count: " + bookRepository.count());
         System.out.println("Publisher Count: " + publisherRepository.count());
     }
 }
