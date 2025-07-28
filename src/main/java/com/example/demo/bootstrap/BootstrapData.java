@@ -47,21 +47,28 @@ public class BootstrapData implements CommandLineRunner {
         west.setFirstName("Tracey");
         west.setLastName("West");
 
+        Author east = new Author();
+        east.setFirstName("Dickey");
+        east.setLastName("East");
+
         Book dm = new Book();
         dm.setTitle("Dragon Masters");
         dm.setIsbn("9876543321");
 
         // Persist the information to the respective DBs
         Author westSaved = authorRepository.save(west);
+        Author eastSaved = authorRepository.save(east);
         Book dmSaved = bookRepository.save(dm);
 
         // Associate the books with the authors
         hyggeSaved.getAuthors().add(miekSaved);
         dmSaved.getAuthors().add(westSaved);
+        dmSaved.getAuthors().add(eastSaved);
 
         // Also do this for the inverse side
         miekSaved.getBooks().add(hyggeSaved);
         westSaved.getBooks().add(dmSaved);
+        eastSaved.getBooks().add(dmSaved);
 
         // create a new publisher object
         Publisher happy = new Publisher();
