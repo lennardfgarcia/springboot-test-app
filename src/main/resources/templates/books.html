@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lennard's Library</title>
+</head>
+<body>
+<h1>Book List</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publisher</th>
+    </tr>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}">123</td>
+        <td th:text="${book.title}">Tungtungtung Sahur</td>
+        <td><span th:each="author, loopVar : ${book.authors}" th:text="${author.lastName} + ${loopVar.last ? '' : ', '}"> La Polizia</span></td>
+        <td th:text="${book.publisher.publisherName}">Brainrot</td>
+    </tr>
+</table>
+
+</body>
+</html>
